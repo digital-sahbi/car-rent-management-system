@@ -20,14 +20,14 @@ Your reservation has been **successfully confirmed**. Below are your booking det
 - **Pickup Date:** {{ $reservation->start_date->format('d M Y') }}
 - **Drop-off Date:** {{ $reservation->end_date->format('d M Y') }}
 - **Total Days:** {{ $reservation->start_date->diffInDays($reservation->end_date) + 1 }}
-- **Total Cost:** Rs. {{ number_format($reservation->total_cost, 2) }}
+- **Total Cost:** {{ number_format((float) $reservation->total_cost, 2, ',', ' ') }} MAD
 
 ---
 
 If you have any questions, feel free to contact our support team.
 
 Thanks for choosing us!
-**Team Venujaya Car Rental**
+**Team Smart Manager Car**
 
 @component('mail::button', ['url' => route('home')])
 Go to Homepage

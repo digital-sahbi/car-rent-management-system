@@ -2,12 +2,35 @@
 
 namespace App\Models;
 
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
     use HasFactory;
+
+    protected static function booted(): void
+    {
+        static::creating(function (self $reservation) {
+            if (empty($reservation->customer_id) && !empty($reservation->passport_number)) {
+                $customer = Customer::firstOrCreate(
+                    ['passport_number' => trim($reservation->passport_number)],
+                    [
+                        'full_name' => $reservation->customer_name ?? 'Unknown Customer',
+                        'phone_number' => $reservation->phone_number ?? null,
+                    ]
+                );
+
+                $reservation->customer_id = $customer->id;
+                $reservation->customer_name = $customer->full_name;
+            }
+
+            if (empty($reservation->customer_name) && !empty($reservation->user_id)) {
+                $reservation->customer_name = optional($reservation->user)->name ?? 'Unknown Customer';
+            }
+        });
+    }
 
     /**
      * The table associated with the model.
@@ -30,6 +53,10 @@ class Reservation extends Model
      */
     protected $fillable = [
         'user_id',
+        'customer_id',
+        'customer_name',
+        'passport_number',
+        'phone_number',
         'vehicle_id',
         'start_date',
         'end_date',
@@ -62,5 +89,10 @@ class Reservation extends Model
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }

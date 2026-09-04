@@ -32,12 +32,12 @@ class StatsOverview extends BaseWidget
             Stat::make('Total Cars', $totalCars),
             Stat::make('Available Cars', $availableCars),
             Stat::make('Under Maintenance', $underMaintenance),
-            Stat::make('Current Month Income', 'LKR ' . number_format($monthlyIncome, 2))
+            Stat::make('Current Month Income', number_format((float) $monthlyIncome, 2, ',', ' ') . ' MAD')
             ->description('Confirmed reservations this month')
             ->descriptionIcon('heroicon-o-currency-dollar')
             ->color($monthlyIncome > 0 ? 'success' : 'danger')
             ->chart([/* optional chart data array */]),
-            Stat::make('Today\'s Income', 'LKR ' . number_format($dailyIncome, 2))
+            Stat::make('Today\'s Income', number_format((float) $dailyIncome, 2, ',', ' ') . ' MAD')
             ->description(now()->format('l, F j')) // e.g. "Monday, January 15"
             ->descriptionIcon('heroicon-o-calendar')
             ->color($dailyIncome > 0 ? 'success' : 'gray')

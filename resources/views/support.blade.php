@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Car Rental - Home')
+@section('title', 'Smart Manager Car - Home')
 @section('content')
 <style>
     .faq-container {

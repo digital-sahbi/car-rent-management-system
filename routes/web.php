@@ -87,6 +87,34 @@ Route::get('/payment', function () {
     return view('payment');
 })->name('payment');
 
+Route::get('/payment/method', function (Request $request) {
+    $price = (float) $request->query('price', 0);
+    $product = $request->query('product', 'Vehicle');
+    $reservationId = $request->query('reservation_id');
+
+    return view('payment-method', [
+        'price' => $price,
+        'product' => $product,
+        'reservation_id' => $reservationId,
+    ]);
+})->name('payment.method');
+
+Route::get('/payment/confirm', function (Request $request) {
+    $price = (float) $request->query('price', 0);
+    $product = $request->query('product', 'Vehicle');
+    $reservationId = $request->query('reservation_id');
+    $method = $request->query('payment_method', 'cash');
+
+    if ($method === 'card') {
+        return redirect()->route('stripe.checkout', [
+            'price' => $price,
+            'product' => $product,
+            'reservation_id' => $reservationId,
+        ]);
+    }
+
+    return redirect()->route('home')->with('success', 'Reservation saved successfully. Payment will be collected on delivery.');
+})->name('payment.confirm');
 
 Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe.index');

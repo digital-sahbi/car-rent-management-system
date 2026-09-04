@@ -166,7 +166,7 @@ class VehicleResource extends Resource
                 ->required()
                 ->numeric()
                 ->minValue(1000)
-                ->prefix('LKR')
+                ->prefix('MAD')
         
            
         ]);
@@ -258,7 +258,7 @@ class VehicleResource extends Resource
         TextColumn::make('daily_rate')
             ->label('Daily Rate')
             ->sortable()
-            ->money('LKR')
+            ->formatStateUsing(fn ($state) => number_format((float) $state, 2, ',', ' ') . ' MAD')
             ->alignRight()
             ->color('success')
             ->weight('medium'),

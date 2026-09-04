@@ -19,7 +19,17 @@ class StripePaymentController extends Controller
 
     public function stripeCheckout(Request $request)
     {
-        $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $secret = config('services.stripe.secret');
+
+        if (empty($secret)) {
+            return redirect()->route('payment.method', [
+                'price' => $request->price,
+                'product' => $request->product,
+                'reservation_id' => $request->reservation_id,
+            ])->with('error', 'Bank card payment is not configured yet. Please choose cash on delivery.');
+        }
+
+        $stripe = new StripeClient($secret);
 
         $response = $stripe->checkout->sessions->create([
             'success_url' => route('stripe.checkout.success') . '?session_id={CHECKOUT_SESSION_ID}',
@@ -29,7 +39,7 @@ class StripePaymentController extends Controller
                 'price_data' => [
                     'product_data' => ['name' => $request->product],
                     'unit_amount' => 100 * $request->price, // price in cents
-                    'currency' => 'LKR',
+                    'currency' => 'mad',
                 ],
                 'quantity' => 1,
             ]],
@@ -41,8 +51,13 @@ class StripePaymentController extends Controller
 
     public function stripeCheckoutSuccess(Request $request)
     {
-        $stripe = new StripeClient(env('STRIPE_SECRET'));
-        dd(env('STRIPE_SECRET')); // Add this line before using StripeClient
+        $secret = config('services.stripe.secret');
+
+        if (empty($secret)) {
+            return redirect()->route('home')->with('error', 'Bank card payment is not configured.');
+        }
+
+        $stripe = new StripeClient($secret);
 
         $session = $stripe->checkout->sessions->retrieve($request->session_id);
 
@@ -64,18 +79,4 @@ class StripePaymentController extends Controller
 
         return redirect()->route('home')->with('error', 'Reservation not found.');
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    //mail function
-    return redirect()->route('home')->with('success', 'Payment successful.');
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }

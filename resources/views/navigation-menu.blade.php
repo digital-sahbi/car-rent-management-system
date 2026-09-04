@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo - Custom Version -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('admin.dashboard') }}">
+                    <a href="{{ route('filament.admin.pages.dashboard') }}">
                         <img src="{{ asset('images/VLogo.png') }}" alt="Your Company Logo" class="h-10 w-auto">
                         <!-- Adjusted size for navbar -->
                     </a>
@@ -13,7 +13,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+                    <x-nav-link href="{{ route('filament.admin.pages.dashboard') }}" :active="request()->routeIs('filament.admin.pages.dashboard')">
 
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -152,7 +152,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+            <x-responsive-nav-link href="{{ route('filament.admin.pages.dashboard') }}" :active="request()->routeIs('filament.admin.pages.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>

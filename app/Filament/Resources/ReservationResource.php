@@ -36,6 +36,21 @@ class ReservationResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('customer_name')
+                    ->label('Customer Name')
+                    ->required()
+                    ->maxLength(255),
+
+                Forms\Components\TextInput::make('passport_number')
+                    ->label('Passport Number')
+                    ->required()
+                    ->maxLength(50),
+
+                Forms\Components\TextInput::make('phone_number')
+                    ->label('Phone Number')
+                    ->required()
+                    ->tel()
+                    ->maxLength(20),
                 
                 Forms\Components\Select::make('vehicle_id')
                 ->label('Select Vehicle')
@@ -135,6 +150,21 @@ Forms\Components\TextInput::make('total_cost')
                   ->sortable()
                   ->searchable(),
 
+              TextColumn::make('customer_name')
+                  ->label('Client Name')
+                  ->sortable()
+                  ->searchable(),
+
+              TextColumn::make('passport_number')
+                  ->label('Passport')
+                  ->sortable()
+                  ->searchable(),
+
+              TextColumn::make('phone_number')
+                  ->label('Phone')
+                  ->sortable()
+                  ->searchable(),
+
                     TextColumn::make('vehicle.registration_number')
                   ->label('Reg_Number')
                   ->sortable()
@@ -164,7 +194,7 @@ Forms\Components\TextInput::make('total_cost')
               // Total Cost
               TextColumn::make('total_cost')
                   ->label('Total Cost')
-                  ->money('LKR') // Format as currency
+                  ->money('MAD') // Format as currency
                   ->sortable(),
   
               // Status

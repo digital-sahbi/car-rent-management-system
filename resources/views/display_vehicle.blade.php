@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Car Rental - vehicle_overview')
+@section('title', 'Smart Manager Car - vehicle_overview')
 @section('content')
 <style>
     .vehicle-gallery {
@@ -230,16 +230,19 @@
         <div class="vehicle-container">
             <!-- Vehicle Gallery -->
             <div class="vehicle-gallery">
-                <img id="main-image" src="{{ asset('storage/' . $vehicle->images->first()->url) }}" alt="" class="main-image">
-               
+                @php
+                    $mainImage = $vehicle->images->first()?->url ?? 'images/default-vehicle.jpg';
+                @endphp
+                <img id="main-image" src="{{ asset('storage/' . ltrim($mainImage, '/')) }}" alt="" class="main-image">
+
                 <div class="thumbnail-container">
-                    @foreach($vehicle->images as $image)
-                    <img src="{{ asset('storage/' . $image->url) }}" alt="" 
-                         class="thumbnail active" 
-                         onclick="changeImage('{{$vehicle->image_1}}', this)">
-                    
-                   
-                    @endforeach
+                    @forelse($vehicle->images as $image)
+                        <img src="{{ asset('storage/' . ltrim($image->url, '/')) }}" alt=""
+                             class="thumbnail active"
+                             onclick="changeImage('{{ asset('storage/' . ltrim($image->url, '/')) }}', this)">
+                    @empty
+                        <img src="{{ asset('images/default-vehicle.jpg') }}" alt="" class="thumbnail active" onclick="changeImage('{{ asset('images/default-vehicle.jpg') }}', this)">
+                    @endforelse
                 </div>
 
             </div>
@@ -249,7 +252,7 @@
                 <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{$vehicle->brand}} {{$vehicle->model}}</h1>
                 
                 <div class="flex items-center mb-6">
-                    <span class="text-2xl font-semibold text-gray-900 mr-4">Rs.{{$vehicle->daily_rate}} / Day</span>
+                    <span class="text-2xl font-semibold text-gray-900 mr-4">{{ number_format((float) $vehicle->daily_rate, 2, ',', ' ') }} MAD / Day</span>
                 </div>
                 
                 <p class="text-gray-600 mb-3">
@@ -278,6 +281,24 @@
                 <form action="{{ route('booking.create') }}" method="get">
                 <div class="rental-form">
                     <h3>Rental Information</h3>
+
+                    <div class="form-row mb-4">
+                        <div class="form-group w-full">
+                            <label for="customer_name">Client Name</label>
+                            <input type="text" id="customer_name" class="form-control" placeholder="Enter client full name" name="customer_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="passport_number">Passport Number</label>
+                            <input type="text" id="passport_number" class="form-control" placeholder="Enter passport number" name="passport_number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="tel" id="phone_number" class="form-control" placeholder="Enter phone number" name="phone_number" required>
+                        </div>
+                    </div>
                     
                     <div class="form-row">
                         <div class="form-group">
@@ -337,7 +358,7 @@
                         </div>
                 </div>
                 <div>
-                    <h2 class="text-2xl font-semibold text-gray-900 mr-4 mb-10 mt-5">Total Price: LKR {{$vehicle->daily_rate}}</h2>
+                    <h2 class="text-2xl font-semibold text-gray-900 mr-4 mb-10 mt-5">Total Price: {{ number_format((float) $vehicle->daily_rate, 2, ',', ' ') }} MAD</h2>
                 </div>
                 <!-- Rent Now Button -->
                 <div class="flex gap-3">
@@ -385,12 +406,12 @@ document.addEventListener('DOMContentLoaded', function() {
             days = Math.ceil(days);
             if (days > 0) {
                 const total = days * dailyRate;
-                totalPriceElem.textContent = `Total Price: LKR ${total}`;
+                totalPriceElem.textContent = `Total Price: MAD ${total}`;
             } else {
-                totalPriceElem.textContent = `Total Price: LKR ${dailyRate}`;
+                totalPriceElem.textContent = `Total Price: MAD ${dailyRate}`;
             }
         } else {
-            totalPriceElem.textContent = `Total Price: LKR ${dailyRate}`;
+            totalPriceElem.textContent = `Total Price: MAD ${dailyRate}`;
         }
     }
 

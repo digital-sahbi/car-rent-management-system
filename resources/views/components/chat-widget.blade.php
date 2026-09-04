@@ -11,7 +11,7 @@
     <div class="bg-indigo-600 text-white p-3 rounded-t-lg flex items-center">
         <img src="{{ asset('images/VLogo.png') }}" alt="Profile" class="w-10 h-10 rounded-full border border-white mr-2">
         <div>
-            <h3 class="text-lg font-semibold">Venujaya Car Rental Service</h3>
+            <h3 class="text-lg font-semibold">Smart Manager Car Service</h3>
             <p class="text-sm text-green-300">Typically replies in a few minites</p>
         </div>
     </div>

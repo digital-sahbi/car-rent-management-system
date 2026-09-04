@@ -45,7 +45,7 @@ class Revenue extends BaseWidget
 
                 Tables\Columns\TextColumn::make('revenue')
                     ->label('Revenue')
-                    ->money('LKR', true)
+                    ->formatStateUsing(fn ($state) => number_format((float) $state, 2, ',', ' ') . ' MAD')
                     ->sortable(),
             ])
             ->filters([

@@ -147,7 +147,7 @@
                                 Year
                             @endif
                         </th>
-                        <th style="text-align: right;">Revenue (LKR)</th>
+                        <th style="text-align: right;">Revenue (MAD)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -162,7 +162,7 @@
                                     {{ $record->period }}
                                 @endif
                             </td>
-                            <td style="text-align: right;">Rs. {{ number_format($record->revenue, 2) }}</td>
+                            <td style="text-align: right;">{{ number_format((float) $record->revenue, 2, ',', ' ') }} MAD</td>
                         </tr>
                     @empty
                         <tr>

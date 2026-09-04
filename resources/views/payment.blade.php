@@ -21,7 +21,7 @@
         <input type="email" name="email" placeholder="Email" required><br><br>
         <div id="card-element"></div>
         <button type="submit" id="submit">
-            <span id="button-text">Pay Rs.{{$total_cost}}</span>
+            <span id="button-text">Pay {{ number_format((float) $total_cost, 2, ',', ' ') }} MAD</span>
         </button>
     </form>
 

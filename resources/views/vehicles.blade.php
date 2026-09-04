@@ -35,8 +35,8 @@
                     <div>
                         <div class="flex items-center justify-between mt-2 text-gray-700 dark:text-gray-200">
                             <div>
-                                <span class="text-2xl font-bold">Rs </span>
-                                <span class="text-2xl font-bold">{{ $vehicle->daily_rate }}</span>
+                                <span class="text-2xl font-bold">{{ number_format((float) $vehicle->daily_rate, 2, ',', ' ') }}</span>
+                                <span class="text-2xl font-bold"> MAD</span>
                                 <span class="text-2xl font-bold">/</span>
                                 <span class="">day</span>
                             </div>

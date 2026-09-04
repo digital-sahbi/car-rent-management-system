@@ -176,7 +176,7 @@
                 <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Toyota Aqua</h1>
                 
                 <div class="flex items-center mb-6">
-                    <span class="text-2xl font-semibold text-gray-900 mr-4">Rs.15000</span>
+                    <span class="text-2xl font-semibold text-gray-900 mr-4">MAD 15000</span>
                 </div>
                 
                 <p class="text-gray-600 mb-3">
